@@ -4,10 +4,12 @@ import toDoReducer from './reducer';
 export interface ToDo {
   id: number;
   text: string;
+  completed: boolean;
 }
 
 export interface ToDos {
   toDos: ToDo[];
+  completed: ToDo[];
 }
 
 export interface ToDoAction {
@@ -20,7 +22,7 @@ interface ToDoStateDispatch {
   dispatch: Dispatch<ToDoAction>;
 }
 
-const initialState: ToDos = { toDos: [] };
+const initialState: ToDos = { toDos: [], completed: [] };
 
 const ToDoContext = createContext<ToDoStateDispatch | undefined>(undefined);
 
@@ -40,6 +42,15 @@ export const useToDos = () => {
     state: { toDos },
   } = toDoStateDispatch;
   return toDos;
+};
+
+export const useCompleted = () => {
+  const toDoStateDispatch = useContext(ToDoContext);
+  if (!toDoStateDispatch) throw new Error('ToDoProvider not found');
+  const {
+    state: { completed },
+  } = toDoStateDispatch;
+  return completed;
 };
 
 export const useToDoDispatch = () => {
