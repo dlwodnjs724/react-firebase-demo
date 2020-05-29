@@ -15,36 +15,37 @@ export interface ToDoAction {
   payload: string | number;
 }
 
-const ToDoStateContext = createContext<ToDos | undefined>(undefined);
+interface ToDoStateDispatch {
+  state: ToDos;
+  dispatch: Dispatch<ToDoAction>;
+}
 
-const ToDoDispatchContext = createContext<Dispatch<ToDoAction> | undefined>(
-  undefined,
-);
+const initialState: ToDos = { toDos: [] };
 
-const initialState = {
-  toDos: [],
-};
+const ToDoContext = createContext<ToDoStateDispatch | undefined>(undefined);
 
 const ToDoContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [state, dispatch] = useReducer(toDoReducer, initialState);
   return (
-    <ToDoDispatchContext.Provider value={dispatch}>
-      <ToDoStateContext.Provider value={state}>
-        {children}
-      </ToDoStateContext.Provider>
-    </ToDoDispatchContext.Provider>
+    <ToDoContext.Provider value={{ state, dispatch }}>
+      {children}
+    </ToDoContext.Provider>
   );
 };
 
 export const useToDos = () => {
-  const toDoState = useContext(ToDoStateContext);
-  if (!toDoState) throw new Error('ToDoProvider not found');
-  return toDoState.toDos;
+  const toDoStateDispatch = useContext(ToDoContext);
+  if (!toDoStateDispatch) throw new Error('ToDoProvider not found');
+  const {
+    state: { toDos },
+  } = toDoStateDispatch;
+  return toDos;
 };
 
 export const useToDoDispatch = () => {
-  const toDoDispatch = useContext(ToDoDispatchContext);
-  if (!toDoDispatch) throw new Error('ToDoProvider not found');
+  const toDoStateDispatch = useContext(ToDoContext);
+  if (!toDoStateDispatch) throw new Error('ToDoProvider not found');
+  const { dispatch: toDoDispatch } = toDoStateDispatch;
   return toDoDispatch;
 };
 
