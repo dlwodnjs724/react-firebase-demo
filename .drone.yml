@@ -1,7 +1,15 @@
 pipeline:
   backend:
-    image: golang
+    image: python
     commands:
-      - go get
-      - go build
-      - go test
+      - echo test
+      - pwd
+      - ls /drone/src/build
+    volumes:
+      - name: build_cache
+        path: /drone/src/build
+
+volumes:
+- name: build_cache
+  host:
+    path: /tmp/cache/futurewiz-rms/storage-api/build
