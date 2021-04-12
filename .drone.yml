@@ -6,6 +6,7 @@ pipeline:
       - pwd
       - ls /drone/src/build
     volumes:
+      - build_cache:/tmp/cache/futurewiz-rms/storage-api/build
       - /tmp/cache/futurewiz-rms/storage-api/build:/drone/src/build
 
 volumes:
