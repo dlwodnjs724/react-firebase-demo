@@ -7,14 +7,6 @@ pipeline:
     
   push:
     image: plugins/docker
-    settings:
-      repo: dlwodnjs724/react-firebase-demo
-      username:
-        from_secret: docker_username
-      password:
-        from_secret: docker_password
     tag: latest
-    # repo: dlwodnjs724/react-firebase-demo
-    # username: $DOCKER_USERNAME
-    # password: $DOCKER_PASSWORD
-    # secrets: [docker_username, docker_password]
+    repo: dlwodnjs724/react-firebase-demo
+    secrets: [docker_username, docker_password]
