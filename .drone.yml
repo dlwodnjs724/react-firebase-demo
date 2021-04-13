@@ -5,3 +5,11 @@ pipeline:
       - echo test
       - pwd
       - ls /drone/src/build
+    
+  push:
+    image: plugins/docker
+    tags: latest
+    repo: dlwodnjs724/react-firebase-demo
+    # username: $DOCKER_USERNAME
+    # password: $DOCKER_PASSWORD
+    # secrets: [docker_username, docker_password]
