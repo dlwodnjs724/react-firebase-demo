@@ -4,7 +4,6 @@ pipeline:
     commands:
       - echo test
       - pwd
-      - ls /drone/src/build
     
   push:
     image: plugins/docker
