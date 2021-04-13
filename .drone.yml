@@ -5,4 +5,3 @@ pipeline:
       - echo test
       - pwd
       - ls /drone/src/build
-      - whoami
